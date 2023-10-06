@@ -1,0 +1,5 @@
+test:
+  stage: test
+  image: golang:1.21.2
+  script:
+    - go test -v .
