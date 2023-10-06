@@ -1,4 +1,4 @@
-module git.clxnetworks.net/andbas/go-grpc-prometheus
+module github.com/andrewbasterfield/go-grpc-prometheus
 
 go 1.20
 

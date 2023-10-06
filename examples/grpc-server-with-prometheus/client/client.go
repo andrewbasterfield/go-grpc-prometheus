@@ -12,8 +12,8 @@ import (
 
 	"google.golang.org/grpc"
 
-	"git.clxnetworks.net/andbas/go-grpc-prometheus"
-	pb "git.clxnetworks.net/andbas/go-grpc-prometheus/examples/grpc-server-with-prometheus/protobuf"
+	"github.com/andrewbasterfield/go-grpc-prometheus"
+	pb "github.com/andrewbasterfield/go-grpc-prometheus/examples/grpc-server-with-prometheus/protobuf"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )

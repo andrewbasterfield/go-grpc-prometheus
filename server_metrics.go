@@ -2,7 +2,7 @@ package grpc_prometheus
 
 import (
 	"context"
-	"git.clxnetworks.net/andbas/go-grpc-prometheus/packages/grpcstatus"
+	"github.com/andrewbasterfield/go-grpc-prometheus/packages/grpcstatus"
 	prom "github.com/prometheus/client_golang/prometheus"
 
 	"google.golang.org/grpc"
