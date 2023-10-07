@@ -8,6 +8,7 @@ package grpc_prometheus
 import (
 	prom "github.com/prometheus/client_golang/prometheus"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
 )
 
 var (
@@ -45,4 +46,10 @@ func Register(server *grpc.Server) {
 func EnableHandlingTimeHistogram(opts ...HistogramOption) {
 	DefaultServerMetrics.EnableHandlingTimeHistogram(opts...)
 	prom.Register(DefaultServerMetrics.serverHandledHistogram)
+}
+
+// EnableStatusCodes enables just the subset of status codes to be converted
+// into labels. Other codes will end up as just 'Error'
+func EnableStatusCodes(codes ...codes.Code) {
+	DefaultServerMetrics.EnableForCodes(codes...)
 }

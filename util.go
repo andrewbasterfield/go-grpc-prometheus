@@ -28,6 +28,24 @@ var (
 	}
 )
 
+func codesMap(codez []codes.Code) map[codes.Code]struct{} {
+	res := map[codes.Code]struct{}{}
+	for _, code := range codez {
+		res[code] = struct{}{}
+	}
+	return res
+}
+
+func codeToString(preRegCodes map[codes.Code]struct{}, code codes.Code) string {
+	if preRegCodes == nil {
+		return code.String()
+	}
+	if _, present := preRegCodes[code]; present {
+		return code.String()
+	}
+	return "Error"
+}
+
 func splitMethodName(fullMethodName string) (string, string) {
 	fullMethodName = strings.TrimPrefix(fullMethodName, "/") // remove leading slash
 	if i := strings.Index(fullMethodName, "/"); i >= 0 {

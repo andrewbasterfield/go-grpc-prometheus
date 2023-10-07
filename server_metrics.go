@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/andrewbasterfield/go-grpc-prometheus/packages/grpcstatus"
 	prom "github.com/prometheus/client_golang/prometheus"
+	"google.golang.org/grpc/codes"
 
 	"google.golang.org/grpc"
 )
@@ -18,6 +19,7 @@ type ServerMetrics struct {
 	serverHandledHistogramEnabled bool
 	serverHandledHistogramOpts    prom.HistogramOpts
 	serverHandledHistogram        *prom.HistogramVec
+	serverStatusCodes             map[codes.Code]struct{}
 }
 
 // NewServerMetrics returns a ServerMetrics object. Use a new instance of
@@ -54,6 +56,7 @@ func NewServerMetrics(counterOpts ...CounterOption) *ServerMetrics {
 			Buckets: prom.DefBuckets,
 		},
 		serverHandledHistogram: nil,
+		serverStatusCodes:      codesMap(allCodes),
 	}
 }
 
@@ -72,6 +75,12 @@ func (m *ServerMetrics) EnableHandlingTimeHistogram(opts ...HistogramOption) {
 		)
 	}
 	m.serverHandledHistogramEnabled = true
+}
+
+// EnableForCodes enables just the subset of status codes to be converted
+// into labels. Other codes will end up as just 'Error'
+func (m *ServerMetrics) EnableForCodes(codes ...codes.Code) {
+	m.serverStatusCodes = codesMap(codes)
 }
 
 // Describe sends the super-set of all possible descriptors of metrics
@@ -177,10 +186,10 @@ func preRegisterMethod(metrics *ServerMetrics, serviceName string, mInfo *grpc.M
 	metrics.serverStartedCounter.GetMetricWithLabelValues(methodType, serviceName, methodName)
 	metrics.serverStreamMsgReceived.GetMetricWithLabelValues(methodType, serviceName, methodName)
 	metrics.serverStreamMsgSent.GetMetricWithLabelValues(methodType, serviceName, methodName)
-	for _, code := range allCodes {
+	for code := range metrics.serverStatusCodes {
 		if metrics.serverHandledHistogramEnabled {
-			metrics.serverHandledHistogram.GetMetricWithLabelValues(methodType, serviceName, methodName, code.String())
+			metrics.serverHandledHistogram.GetMetricWithLabelValues(methodType, serviceName, methodName, codeToString(metrics.serverStatusCodes, code))
 		}
-		metrics.serverHandledCounter.GetMetricWithLabelValues(methodType, serviceName, methodName, code.String())
+		metrics.serverHandledCounter.GetMetricWithLabelValues(methodType, serviceName, methodName, codeToString(metrics.serverStatusCodes, code))
 	}
 }

@@ -89,6 +89,8 @@ func (s *ServerInterceptorTestSuite) SetupTest() {
 	DefaultServerMetrics.serverHandledHistogram.Reset()
 	DefaultServerMetrics.serverStreamMsgReceived.Reset()
 	DefaultServerMetrics.serverStreamMsgSent.Reset()
+	DefaultServerMetrics.serverStatusCodes = nil
+	EnableStatusCodes(codes.OK, codes.OutOfRange, codes.Aborted, codes.FailedPrecondition, codes.ResourceExhausted)
 	Register(s.server)
 }
 
