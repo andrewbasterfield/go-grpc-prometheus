@@ -68,7 +68,7 @@ func (m *ServerMetrics) EnableHandlingTimeHistogram(opts ...HistogramOption) {
 	if !m.serverHandledHistogramEnabled {
 		m.serverHandledHistogram = prom.NewHistogramVec(
 			m.serverHandledHistogramOpts,
-			[]string{"grpc_type", "grpc_service", "grpc_method"},
+			[]string{"grpc_type", "grpc_service", "grpc_method", "grpc_code"},
 		)
 	}
 	m.serverHandledHistogramEnabled = true
@@ -177,10 +177,10 @@ func preRegisterMethod(metrics *ServerMetrics, serviceName string, mInfo *grpc.M
 	metrics.serverStartedCounter.GetMetricWithLabelValues(methodType, serviceName, methodName)
 	metrics.serverStreamMsgReceived.GetMetricWithLabelValues(methodType, serviceName, methodName)
 	metrics.serverStreamMsgSent.GetMetricWithLabelValues(methodType, serviceName, methodName)
-	if metrics.serverHandledHistogramEnabled {
-		metrics.serverHandledHistogram.GetMetricWithLabelValues(methodType, serviceName, methodName)
-	}
 	for _, code := range allCodes {
+		if metrics.serverHandledHistogramEnabled {
+			metrics.serverHandledHistogram.GetMetricWithLabelValues(methodType, serviceName, methodName, code.String())
+		}
 		metrics.serverHandledCounter.GetMetricWithLabelValues(methodType, serviceName, methodName, code.String())
 	}
 }
