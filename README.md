@@ -1,13 +1,9 @@
-# (Deprecated) Go gRPC Interceptors for Prometheus monitoring 
+# Go gRPC Interceptors for Prometheus monitoring 
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/andrewbasterfield/go-grpc-prometheus)](http://goreportcard.com/report/grpc-ecosystem/go-grpc-prometheus)
 [![GoDoc](http://img.shields.io/badge/GoDoc-Reference-blue.svg)](https://godoc.org/github.com/andrewbasterfield/go-grpc-prometheus)
 [![SourceGraph](https://sourcegraph.com/github.com/andrewbasterfield/go-grpc-prometheus/-/badge.svg)](https://sourcegraph.com/github.com/andrewbasterfield/go-grpc-prometheus/?badge)
-[![codecov](https://codecov.io/gh/grpc-ecosystem/go-grpc-prometheus/branch/master/graph/badge.svg)](https://codecov.io/gh/grpc-ecosystem/go-grpc-prometheus)
-[![Slack](https://img.shields.io/badge/join%20slack-%23go--grpc--prometheus-brightgreen.svg)](https://join.slack.com/t/improbable-eng/shared_invite/enQtMzQ1ODcyMzQ5MjM4LWY5ZWZmNGM2ODc5MmViNmQ3ZTA3ZTY3NzQwOTBlMTkzZmIxZTIxODk0OWU3YjZhNWVlNDU3MDlkZGViZjhkMjc)
 [![Apache 2.0 License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
-
-> :warning: This project is depreacted and archived as the functionality moved to [go-grpc-middleware](https://github.com/grpc-ecosystem/go-grpc-middleware) repo since [provider/prometheus@v1.0.0-rc.0](https://github.com/grpc-ecosystem/go-grpc-middleware/releases/tag/providers%2Fprometheus%2Fv1.0.0-rc.0) release. You can pull it using `go get github.com/grpc-ecosystem/go-grpc-middleware/providers/prometheus`. The API is simplified and morernized, yet functionality is similar to what v1.2.0 offered. All questions and issues you can submit [here](https://github.com/grpc-ecosystem/go-grpc-middleware/issues).
 
 [Prometheus](https://prometheus.io/) monitoring for your [gRPC Go](https://github.com/grpc/grpc-go) servers and clients.
 
