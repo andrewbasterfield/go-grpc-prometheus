@@ -84,12 +84,7 @@ func (s *ServerInterceptorTestSuite) SetupTest() {
 	s.ctx, s.cancel = context.WithTimeout(context.TODO(), 2*time.Second)
 
 	// Make sure every test starts with same fresh, intialized metric state.
-	DefaultServerMetrics.serverStartedCounter.Reset()
-	DefaultServerMetrics.serverHandledCounter.Reset()
-	DefaultServerMetrics.serverHandledHistogram.Reset()
-	DefaultServerMetrics.serverStreamMsgReceived.Reset()
-	DefaultServerMetrics.serverStreamMsgSent.Reset()
-	DefaultServerMetrics.serverStatusCodes = nil
+	DefaultServerMetrics.Reset()
 	EnableStatusCodes(codes.OK, codes.OutOfRange, codes.Aborted, codes.FailedPrecondition, codes.ResourceExhausted)
 	Register(s.server)
 }

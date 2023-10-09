@@ -22,6 +22,17 @@ type ServerMetrics struct {
 	serverStatusCodes             map[codes.Code]struct{}
 }
 
+func (m *ServerMetrics) Reset() {
+	m.serverStartedCounter.Reset()
+	m.serverHandledCounter.Reset()
+	m.serverStreamMsgReceived.Reset()
+	m.serverStreamMsgSent.Reset()
+	if m.serverHandledHistogram != nil {
+		m.serverHandledHistogram.Reset()
+	}
+	m.serverStatusCodes = nil
+}
+
 // NewServerMetrics returns a ServerMetrics object. Use a new instance of
 // ServerMetrics when not using the default Prometheus metrics registry, for
 // example when wanting to control which metrics are added to a registry as
